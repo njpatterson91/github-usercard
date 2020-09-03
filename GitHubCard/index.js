@@ -4,15 +4,15 @@
     https://api.github.com/users/<your name>
 */
 import axios from "axios";
-axios
-  .get("https://api.github.com/users/odst0016")
-  .then((stuff) => {
-    console.log(stuff.data.avatar_url);
-  })
-  .catch((err) => {
-    console.log(err);
-    //debugger;
-  });
+// axios
+//   .get("https://api.github.com/users/odst0016")
+//   .then((stuff) => {
+//     console.log(stuff.data.avatar_url);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//     //debugger;
+//   });
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -99,17 +99,20 @@ function githubUsersCard(props) {
   divInfo.appendChild(userBio);
   return divCard;
 }
-
-axios.get("https://api.github.com/users/odst0016").then((props) => {
-  const data = props.data;
-  //console.log(test);
-  //console.log(githubUsersCard({ test }));
-  // console.log(
-  //test.forEach((props) => {
-  //console.log();c
-  entryPoint.appendChild(githubUsersCard(data));
-  // })
-  //);
+const userNameArr = [
+  "odst0016",
+  "jeffreyo3",
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell",
+];
+userNameArr.forEach((username) => {
+  axios.get(`https://api.github.com/users/${username}`).then((props) => {
+    const data = props.data;
+    entryPoint.appendChild(githubUsersCard(data));
+  });
 });
 
 /*
