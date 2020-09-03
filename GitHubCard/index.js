@@ -72,9 +72,10 @@ function githubUsersCard(props) {
   const userLocation = document.createElement("p");
   userLocation.textContent = props.location;
   const userProfile = document.createElement("p");
-  userProfile.textContent = "Profile:";
+  userProfile.textContent = "Profile: ";
   const userProfileLink = document.createElement("a");
-  userProfileLink.src = props.html_url;
+  userProfileLink.href = props.html_url;
+  userProfileLink.textContent = "Click to go to Profile";
   const userFollower = document.createElement("p");
   userFollower.textContent = `Followers: ${props.followers}`;
   const userFollowing = document.createElement("p");
@@ -109,10 +110,15 @@ const userNameArr = [
   "bigknell",
 ];
 userNameArr.forEach((username) => {
-  axios.get(`https://api.github.com/users/${username}`).then((props) => {
-    const data = props.data;
-    entryPoint.appendChild(githubUsersCard(data));
-  });
+  axios
+    .get(`https://api.github.com/users/${username}`)
+    .then((props) => {
+      const data = props.data;
+      entryPoint.appendChild(githubUsersCard(data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 /*
