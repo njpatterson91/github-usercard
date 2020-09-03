@@ -58,29 +58,59 @@ const followersArray = [];
       </div>
     </div>
 */
-function githubUsersCard({ props }) {
+const entryPoint = document.querySelector(".cards");
+function githubUsersCard(props) {
   //Instantiating and adding content
   const divCard = document.createElement("div");
   const userImg = document.createElement("img");
-  userImg.src = props.data.avatar_url;
+  userImg.src = props.avatar_url;
   const divInfo = document.createElement("div");
   const usersFullNameH3 = document.createElement("h3");
-  usersFullNameH3.textContent = props.data.name;
+  usersFullNameH3.textContent = props.name;
   const userName = document.createElement("p");
-  userName.textContent = props.data.login;
+  userName.textContent = props.login;
   const userLocation = document.createElement("p");
-  userLocation.textContent = props.data.location;
+  userLocation.textContent = props.location;
   const userProfile = document.createElement("p");
   userProfile.textContent = "Profile:";
   const userProfileLink = document.createElement("a");
-  userProfileLink.src = props.data.html_url;
+  userProfileLink.src = props.html_url;
   const userFollower = document.createElement("p");
-  userFollower.textContent = props.data.followers;
+  userFollower.textContent = `Followers: ${props.followers}`;
   const userFollowing = document.createElement("p");
-  userFollowing.textContent = props.data.following;
+  userFollowing.textContent = `Following: ${props.following}`;
   const userBio = document.createElement("p");
-  userBio = props.data.bio;
+  userBio.textContent = `Bio: ${props.bio}`;
+  //Setting Styles
+  divCard.classList.add("card");
+  divInfo.classList.add("card-info");
+  usersFullNameH3.classList.add("name");
+  userName.classList.add("username");
+  //creating component structure
+  divCard.appendChild(userImg);
+  divCard.appendChild(divInfo);
+  divInfo.appendChild(usersFullNameH3);
+  divInfo.appendChild(userName);
+  divInfo.appendChild(userLocation);
+  divInfo.appendChild(userProfile);
+  userProfile.appendChild(userProfileLink);
+  divInfo.appendChild(userFollower);
+  divInfo.appendChild(userFollowing);
+  divInfo.appendChild(userBio);
+  return divCard;
 }
+
+axios.get("https://api.github.com/users/odst0016").then((props) => {
+  const data = props.data;
+  //console.log(test);
+  //console.log(githubUsersCard({ test }));
+  // console.log(
+  //test.forEach((props) => {
+  //console.log();c
+  entryPoint.appendChild(githubUsersCard(data));
+  // })
+  //);
+});
 
 /*
   List of LS Instructors Github username's:
