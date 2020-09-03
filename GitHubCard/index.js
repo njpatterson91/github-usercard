@@ -3,7 +3,16 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+import axios from "axios";
+axios
+  .get("https://api.github.com/users/odst0016")
+  .then((stuff) => {
+    console.log(stuff.data.avatar_url);
+  })
+  .catch((err) => {
+    console.log(err);
+    //debugger;
+  });
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -49,6 +58,29 @@ const followersArray = [];
       </div>
     </div>
 */
+function githubUsersCard({ props }) {
+  //Instantiating and adding content
+  const divCard = document.createElement("div");
+  const userImg = document.createElement("img");
+  userImg.src = props.data.avatar_url;
+  const divInfo = document.createElement("div");
+  const usersFullNameH3 = document.createElement("h3");
+  usersFullNameH3.textContent = props.data.name;
+  const userName = document.createElement("p");
+  userName.textContent = props.data.login;
+  const userLocation = document.createElement("p");
+  userLocation.textContent = props.data.location;
+  const userProfile = document.createElement("p");
+  userProfile.textContent = "Profile:";
+  const userProfileLink = document.createElement("a");
+  userProfileLink.src = props.data.html_url;
+  const userFollower = document.createElement("p");
+  userFollower.textContent = props.data.followers;
+  const userFollowing = document.createElement("p");
+  userFollowing.textContent = props.data.following;
+  const userBio = document.createElement("p");
+  userBio = props.data.bio;
+}
 
 /*
   List of LS Instructors Github username's:
