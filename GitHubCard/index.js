@@ -3,7 +3,16 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+import axios from "axios";
+// axios
+//   .get("https://api.github.com/users/odst0016")
+//   .then((stuff) => {
+//     console.log(stuff.data.avatar_url);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//     //debugger;
+//   });
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -49,6 +58,68 @@ const followersArray = [];
       </div>
     </div>
 */
+const entryPoint = document.querySelector(".cards");
+function githubUsersCard(props) {
+  //Instantiating and adding content
+  const divCard = document.createElement("div");
+  const userImg = document.createElement("img");
+  userImg.src = props.avatar_url;
+  const divInfo = document.createElement("div");
+  const usersFullNameH3 = document.createElement("h3");
+  usersFullNameH3.textContent = props.name;
+  const userName = document.createElement("p");
+  userName.textContent = props.login;
+  const userLocation = document.createElement("p");
+  userLocation.textContent = props.location;
+  const userProfile = document.createElement("p");
+  userProfile.textContent = "Profile: ";
+  const userProfileLink = document.createElement("a");
+  userProfileLink.href = props.html_url;
+  userProfileLink.textContent = "Click to go to Profile";
+  const userFollower = document.createElement("p");
+  userFollower.textContent = `Followers: ${props.followers}`;
+  const userFollowing = document.createElement("p");
+  userFollowing.textContent = `Following: ${props.following}`;
+  const userBio = document.createElement("p");
+  userBio.textContent = `Bio: ${props.bio}`;
+  //Setting Styles
+  divCard.classList.add("card");
+  divInfo.classList.add("card-info");
+  usersFullNameH3.classList.add("name");
+  userName.classList.add("username");
+  //creating component structure
+  divCard.appendChild(userImg);
+  divCard.appendChild(divInfo);
+  divInfo.appendChild(usersFullNameH3);
+  divInfo.appendChild(userName);
+  divInfo.appendChild(userLocation);
+  divInfo.appendChild(userProfile);
+  userProfile.appendChild(userProfileLink);
+  divInfo.appendChild(userFollower);
+  divInfo.appendChild(userFollowing);
+  divInfo.appendChild(userBio);
+  return divCard;
+}
+const userNameArr = [
+  "odst0016",
+  "jeffreyo3",
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell",
+];
+userNameArr.forEach((username) => {
+  axios
+    .get(`https://api.github.com/users/${username}`)
+    .then((props) => {
+      const data = props.data;
+      entryPoint.appendChild(githubUsersCard(data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 /*
   List of LS Instructors Github username's:
